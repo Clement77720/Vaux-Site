@@ -102,9 +102,7 @@ export default function AxisSection() {
                   transition-colors duration-500
                   ${isActive ? "border-goldLight md:border-none bg-goldLight/[.07] md:bg-transparent" : "border-goldLight/30"}`}
               >
-                {i % 2 === 1 && <div className="hidden md:block" />}
-
-                <div className="hidden md:flex justify-center pt-0">
+                <div className="hidden md:flex justify-center pt-0 md:col-start-2 md:row-start-1">
                   <div
                     className={`w-[13px] h-[13px] rounded-full border border-goldLight transition-all duration-300 ${
                       isActive
@@ -114,7 +112,11 @@ export default function AxisSection() {
                   />
                 </div>
 
-                <div className={`md:px-8 ${i % 2 === 1 ? "md:text-right" : ""}`}>
+                <div
+                  className={`md:px-8 md:row-start-1 ${
+                    i % 2 === 1 ? "md:col-start-3 md:text-right" : "md:col-start-1"
+                  }`}
+                >
                   <span className="font-ui text-[.66rem] tracking-[.18em] text-gold uppercase flex md:inline-flex items-center gap-2.5">
                     <span className="w-4 h-px bg-gold inline-block md:hidden" />
                     {p.num}
@@ -126,8 +128,6 @@ export default function AxisSection() {
                     {p.text}
                   </p>
                 </div>
-
-                {i % 2 === 0 && <div className="hidden md:block" />}
               </div>
             );
           })}
