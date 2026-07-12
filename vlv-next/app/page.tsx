@@ -1,5 +1,6 @@
 import Reveal from "@/components/Reveal";
 import AxisSection from "@/components/AxisSection";
+import HeroParallax from "@/components/HeroParallax";
 import Link from "next/link";
 
 const IMG = {
@@ -22,15 +23,10 @@ export default function Home() {
     <>
       {/* HERO */}
       <section className="relative min-h-[100svh] flex items-end overflow-hidden">
-        <div className="absolute inset-0">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={IMG.aerial}
-            alt="Vue aérienne du château de Vaux-le-Vicomte"
-            className="w-full h-full object-cover scale-110"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#141912]/20 via-[#141912]/25 to-[#0f140c]/[0.82]" />
-        </div>
+        <HeroParallax
+          src={IMG.aerial}
+          alt="Vue aérienne du château de Vaux-le-Vicomte"
+        />
         <div className="relative z-[2] max-w-[1180px] mx-auto px-5 md:px-10 pb-14 md:pb-24 w-full text-cream">
           <span className="font-ui text-goldLight text-[.68rem] tracking-[.22em] uppercase">
             Maincy · Seine-et-Marne
