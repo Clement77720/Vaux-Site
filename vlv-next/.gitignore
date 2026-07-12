@@ -3,3 +3,7 @@ node_modules
 out
 .env*
 *.log
+
+# Windows/WSL "Mark of the Web" alternate-stream residue
+*:Zone.Identifier
+*.tsbuildinfo
