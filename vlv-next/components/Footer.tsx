@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
@@ -6,9 +7,7 @@ export default function Footer() {
       <div className="max-w-[1180px] mx-auto px-5 md:px-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr] gap-8 md:gap-12 pb-10 border-b border-cream/10">
           <div>
-            <div className="font-display text-xl text-cream mb-3">
-              Vaux-le-Vicomte
-            </div>
+            <Logo className="h-10 w-auto text-cream mb-4" />
             <p className="font-ui text-sm leading-relaxed max-w-[32ch] text-cream/55">
               Château de Vaux-le-Vicomte
               <br />
