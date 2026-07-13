@@ -106,6 +106,72 @@ export default function Home() {
         </div>
       </section>
 
+      {/* KEY FIGURES */}
+      <section className="bg-navy text-cream py-14 md:py-20">
+        <div className="max-w-[1180px] mx-auto px-5 md:px-10 grid grid-cols-2 md:grid-cols-4 gap-y-9 gap-x-4">
+          {[
+            ["1661", "La fête fastueuse de Fouquet"],
+            ["33 ha", "De jardins à la française"],
+            ["3 génies", "Le Vau · Le Brun · Le Nôtre"],
+            ["50 km", "Au sud-est de Paris"],
+          ].map(([n, l]) => (
+            <Reveal key={l} className="text-center">
+              <span className="font-display text-[clamp(1.9rem,6vw,3.1rem)] text-goldLight block leading-none">
+                {n}
+              </span>
+              <span className="font-ui text-[.68rem] md:text-[.72rem] tracking-[.14em] uppercase text-cream/65 mt-3 block">
+                {l}
+              </span>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* DISCOVER — directory */}
+      <section className="py-20 md:py-[130px] bg-creamDeep">
+        <div className="max-w-[1180px] mx-auto px-5 md:px-10">
+          <Reveal className="max-w-[600px] mb-10 md:mb-14">
+            <span className="font-ui text-[.68rem] tracking-[.22em] uppercase text-gold">
+              Explorer le domaine
+            </span>
+            <h2 className="font-display font-semibold text-[clamp(1.7rem,7vw,2.9rem)] leading-tight mt-3">
+              Trois siècles d&apos;art de vivre, en un seul lieu
+            </h2>
+          </Reveal>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              { num: "01", title: "Le Château", href: "/chateau", desc: "Les appartements de Fouquet, le Grand Salon ovale sous le dôme et les décors de Charles Le Brun." },
+              { num: "02", title: "Les Jardins à la française", href: "/jardins", desc: "33 hectares de broderies de buis, bassins et perspectives dessinés par André Le Nôtre." },
+              { num: "03", title: "Le Musée des Équipages", href: "/visiter", desc: "Une collection rare de carrosses et d'attelages, installée dans les anciennes écuries du château." },
+              { num: "04", title: "Les Jeux d'eau", href: "/jardins", desc: "Bassins, cascades et fontaines s'animent certains après-midis de la belle saison." },
+              { num: "05", title: "Les Soirées aux Chandelles", href: "/evenements", desc: "Plus de 2 000 bougies, un bar à champagne et un feu d'artifice, chaque samedi d'été." },
+              { num: "06", title: "Boutique & Restaurant", href: "/visiter", desc: "Le restaurant L'Écureuil, un salon de thé et une librairie pour prolonger la visite." },
+            ].map((it) => (
+              <Reveal key={it.title}>
+                <Link
+                  href={it.href}
+                  className="group flex h-full flex-col bg-cream rounded-sm p-6 md:p-7 border border-[#3B2A1A]/12 hover:border-gold hover:-translate-y-1 transition-all duration-300"
+                >
+                  <span className="font-ui text-[.7rem] tracking-[.18em] text-gold">
+                    {it.num}
+                  </span>
+                  <h3 className="font-display font-semibold text-[1.3rem] md:text-[1.45rem] text-navy mt-2 mb-2.5">
+                    {it.title}
+                  </h3>
+                  <p className="font-ui font-light text-[.88rem] leading-relaxed text-[#4a4536]">
+                    {it.desc}
+                  </p>
+                  <span className="font-ui text-[.66rem] tracking-[.16em] uppercase text-navy mt-5 inline-flex items-center gap-2 group-hover:text-gold transition-colors">
+                    Découvrir
+                    <span className="transition-transform group-hover:translate-x-1">→</span>
+                  </span>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <AxisSection />
 
       {/* GARDENS */}
@@ -198,6 +264,48 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SEASONAL AGENDA */}
+      <section className="py-20 md:py-[130px]">
+        <div className="max-w-[1180px] mx-auto px-5 md:px-10">
+          <Reveal className="flex flex-col md:flex-row md:justify-between md:items-end gap-5 mb-10 md:mb-14">
+            <div>
+              <span className="font-ui text-[.68rem] tracking-[.22em] uppercase text-gold">
+                L&apos;agenda du domaine
+              </span>
+              <h2 className="font-display font-semibold text-[clamp(1.7rem,7vw,2.9rem)] leading-tight mt-3 max-w-[560px]">
+                Toute l&apos;année à Vaux-le-Vicomte
+              </h2>
+            </div>
+            <Link
+              href="/evenements"
+              className="font-ui text-[.7rem] tracking-[.16em] uppercase text-navy border-b border-gold pb-1 hover:text-gold transition-colors self-start"
+            >
+              Voir l&apos;agenda complet
+            </Link>
+          </Reveal>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6">
+            {[
+              ["Printemps", "La Chasse aux Œufs", "Le plus grand jeu de piste de Pâques, à travers les jardins du domaine."],
+              ["Été", "Les Soirées aux Chandelles", "2 000 bougies, jeux d'eau et feu d'artifice, chaque samedi soir de mai à septembre."],
+              ["Automne", "Les Journées Grand Siècle", "Le domaine revit en costumes du XVIIᵉ siècle le temps d'un week-end."],
+              ["Hiver", "Noël à Vaux-le-Vicomte", "Le château se pare de décors féeriques pour les fêtes de fin d'année."],
+            ].map(([saison, titre, desc]) => (
+              <Reveal key={titre} className="border-t-2 border-gold pt-5">
+                <span className="font-ui text-[.64rem] tracking-[.18em] uppercase text-gold">
+                  {saison}
+                </span>
+                <h3 className="font-display font-semibold text-[1.25rem] text-navy mt-2 mb-2">
+                  {titre}
+                </h3>
+                <p className="font-ui font-light text-[.86rem] leading-relaxed text-[#4a4536]">
+                  {desc}
+                </p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* INFOS / BOOKING */}
       <section className="py-20 md:py-[150px]">
         <div className="max-w-[1180px] mx-auto px-5 md:px-10">
@@ -262,6 +370,78 @@ export default function Home() {
               ))}
               <button className="border border-gold bg-gold text-navy px-8 py-3.5 text-xs tracking-wider uppercase font-ui">
                 Choisir mes billets
+              </button>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ACCESS */}
+      <section className="bg-brown text-cream py-16 md:py-24">
+        <div className="max-w-[1180px] mx-auto px-5 md:px-10 grid grid-cols-1 md:grid-cols-[1fr_1.35fr] gap-10 md:gap-16">
+          <Reveal>
+            <span className="font-ui text-[.68rem] tracking-[.22em] uppercase text-goldLight">
+              Comment venir
+            </span>
+            <h2 className="font-display font-semibold text-[clamp(1.7rem,7vw,2.8rem)] leading-tight mt-3 mb-5">
+              À moins d&apos;une heure de Paris
+            </h2>
+            <p className="font-ui font-light text-cream/75 leading-relaxed max-w-[42ch] text-[.92rem]">
+              Le domaine se situe à Maincy, en Seine-et-Marne, à une cinquantaine
+              de kilomètres au sud-est de la capitale.
+            </p>
+            <p className="font-display italic text-goldLight text-[1.05rem] mt-6 leading-relaxed">
+              Château de Vaux-le-Vicomte
+              <span className="block font-ui not-italic text-[.8rem] text-cream/70 mt-1">
+                77950 Maincy — Seine-et-Marne
+              </span>
+            </p>
+          </Reveal>
+          <Reveal className="grid sm:grid-cols-2 gap-x-8 gap-y-7">
+            {[
+              ["En voiture", "Autoroutes A4 puis A5, sortie Saint-Germain-Laxis, ou A6. Environ 55 minutes depuis Paris."],
+              ["En train", "RER D ou Transilien ligne R depuis Paris Gare de Lyon jusqu'à la gare de Melun."],
+              ["La navette Châteaubus", "Depuis la gare de Melun jusqu'à l'entrée du domaine, les week-ends et jours fériés."],
+              ["Stationnement", "Un vaste parking gratuit vous accueille à l'entrée du château."],
+            ].map(([k, v]) => (
+              <div key={k} className="border-t border-cream/15 pt-4">
+                <b className="block font-ui text-[.7rem] tracking-[.14em] uppercase text-goldLight mb-2">
+                  {k}
+                </b>
+                <p className="font-ui font-light text-[.88rem] leading-relaxed text-cream/80">
+                  {v}
+                </p>
+              </div>
+            ))}
+          </Reveal>
+        </div>
+      </section>
+
+      {/* NEWSLETTER */}
+      <section className="py-16 md:py-24 bg-navy text-cream">
+        <div className="max-w-[680px] mx-auto px-5 text-center">
+          <Reveal>
+            <span className="font-ui text-[.68rem] tracking-[.22em] uppercase text-goldLight">
+              Restez informé
+            </span>
+            <h2 className="font-display font-semibold text-[clamp(1.6rem,6.5vw,2.5rem)] leading-tight mt-3 mb-4">
+              Recevez la programmation du domaine
+            </h2>
+            <p className="font-ui font-light text-cream/70 leading-relaxed max-w-[46ch] mx-auto text-[.92rem]">
+              Événements, ouvertures exceptionnelles et actualités de
+              Vaux-le-Vicomte, directement dans votre boîte mail.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 mt-8 max-w-[480px] mx-auto">
+              <input
+                type="email"
+                placeholder="Votre adresse e-mail"
+                className="flex-1 min-w-0 bg-transparent border border-cream/25 rounded-sm px-4 py-3.5 font-ui text-sm text-cream placeholder:text-cream/40 focus:border-gold focus:outline-none transition-colors"
+              />
+              <button
+                type="button"
+                className="border border-gold bg-gold text-navy px-8 py-3.5 text-xs tracking-wider uppercase font-ui shrink-0"
+              >
+                S&apos;inscrire
               </button>
             </div>
           </Reveal>

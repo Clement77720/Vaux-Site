@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Logo from "./Logo";
 
 const links = [
   { href: "/chateau", label: "Le Château" },
@@ -37,14 +38,12 @@ export default function Nav() {
       >
         <Link
           href="/"
-          className={`font-display flex flex-col leading-none max-w-[60vw] text-base md:text-xl tracking-wide transition-colors duration-300 ${
+          aria-label="Vaux-le-Vicomte — Accueil"
+          className={`transition-colors duration-300 ${
             scrolled ? "text-navy" : "text-cream"
           }`}
         >
-          VAUX-LE-VICOMTE
-          <small className="font-ui text-goldLight tracking-[.28em] mt-1 whitespace-nowrap text-[.46rem] md:text-[.5rem]">
-            DOMAINE HISTORIQUE · 1661
-          </small>
+          <Logo className="h-8 md:h-10 w-auto" />
         </Link>
 
         <ul className="hidden md:flex gap-9 font-ui text-sm tracking-wide">
