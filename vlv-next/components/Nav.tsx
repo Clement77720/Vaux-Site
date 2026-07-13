@@ -34,13 +34,15 @@ export default function Nav() {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-[1000] flex items-center justify-between px-5 py-4 md:px-10 md:py-6 transition-all duration-500 ${
-          scrolled ? "bg-cream/95 backdrop-blur-md shadow-sm py-3 md:py-4" : ""
+          scrolled
+            ? "bg-cream/95 backdrop-blur-md shadow-sm py-3 md:py-4 pointer-events-auto"
+            : "pointer-events-none"
         }`}
       >
         <Link
           href="/"
           aria-label="Vaux-le-Vicomte — Accueil"
-          className={`transition-colors duration-300 ${
+          className={`pointer-events-auto transition-colors duration-300 ${
             scrolled ? "text-navy" : "text-cream"
           }`}
         >
@@ -52,7 +54,7 @@ export default function Nav() {
             <li key={l.href}>
               <Link
                 href={l.href}
-                className={`relative pb-1 transition-colors duration-300 group ${
+                className={`pointer-events-auto relative pb-1 transition-colors duration-300 group ${
                   scrolled ? "text-navy" : "text-cream"
                 }`}
               >
@@ -65,7 +67,7 @@ export default function Nav() {
 
         <div className="flex items-center gap-4">
           <button
-            className={`hidden md:inline-flex items-center gap-2 border px-7 py-3 text-xs tracking-wider uppercase font-ui transition-colors duration-300 ${
+            className={`pointer-events-auto hidden md:inline-flex items-center gap-2 border px-7 py-3 text-xs tracking-wider uppercase font-ui transition-colors duration-300 ${
               scrolled
                 ? "border-navy text-navy hover:bg-navy hover:text-cream"
                 : "border-gold bg-gold text-navy hover:bg-navy hover:text-cream"
@@ -76,7 +78,7 @@ export default function Nav() {
           <button
             aria-label="Menu"
             onClick={() => setOpen(true)}
-            className="md:hidden flex flex-col gap-[5px] p-1.5"
+            className="pointer-events-auto md:hidden flex flex-col gap-[5px] p-1.5"
           >
             <span className={`w-6 h-px ${scrolled ? "bg-navy" : "bg-cream"}`} />
             <span className={`w-6 h-px ${scrolled ? "bg-navy" : "bg-cream"}`} />
