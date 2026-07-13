@@ -10,6 +10,7 @@ const links = [
   { href: "/jardins", label: "Les Jardins" },
   { href: "/evenements", label: "Événements" },
   { href: "/visiter", label: "Visiter" },
+  { href: "/les-amis", label: "Nous soutenir" },
   { href: "/contact", label: "Contact" },
 ];
 
