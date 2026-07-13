@@ -27,6 +27,9 @@ export default function Footer() {
             <Link href="/evenements" className="block font-ui text-sm mb-3 hover:text-goldLight transition-colors">
               Événements
             </Link>
+            <Link href="/les-amis" className="block font-ui text-sm mb-3 hover:text-goldLight transition-colors">
+              Les Amis de Vaux
+            </Link>
           </div>
           <div>
             <h4 className="font-ui text-xs tracking-[.14em] uppercase text-gold mb-4">
