@@ -1,6 +1,6 @@
 import Reveal from "@/components/Reveal";
 import AxisSection from "@/components/AxisSection";
-import HeroParallax from "@/components/HeroParallax";
+import HeroInteractive from "@/components/HeroInteractive";
 import Link from "next/link";
 
 const IMG = {
@@ -23,11 +23,11 @@ export default function Home() {
     <>
       {/* HERO */}
       <section className="relative min-h-[100svh] flex items-end overflow-hidden">
-        <HeroParallax
+        <HeroInteractive
           src={IMG.aerial}
           alt="Vue aérienne du château de Vaux-le-Vicomte"
         />
-        <div className="relative z-[2] max-w-[1180px] mx-auto px-5 md:px-10 pb-14 md:pb-24 w-full text-cream">
+        <div className="pointer-events-none relative z-[2] max-w-[1180px] mx-auto px-5 md:px-10 pb-14 md:pb-24 w-full text-cream">
           <span className="font-ui text-goldLight text-[.68rem] tracking-[.22em] uppercase">
             Maincy · Seine-et-Marne
           </span>
@@ -40,7 +40,7 @@ export default function Home() {
             artistes visionnaires, Vaux-le-Vicomte fut le modèle d&apos;un
             château qui inspira Versailles.
           </p>
-          <div className="flex flex-col md:flex-row gap-3.5 mt-7">
+          <div className="pointer-events-auto flex flex-col md:flex-row gap-3.5 mt-7">
             <button className="w-full md:w-auto border border-gold bg-gold text-navy px-8 py-3.5 text-xs tracking-wider uppercase font-ui">
               Réserver ma visite
             </button>
