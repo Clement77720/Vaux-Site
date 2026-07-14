@@ -1,9 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 const F = (name: string) =>
   `https://commons.wikimedia.org/wiki/Special:FilePath/${name}`;
+
+/** Aspect ratio (w/h) of the aerial, used until the real image reports its
+ *  natural size. Keeps hotspots roughly placed on first paint / when the
+ *  external image can't load. */
+const IMG_ASPECT_FALLBACK = 1.6;
+
+type Geom = { ox: number; oy: number; rw: number; rh: number };
 
 export type HeroPoint = {
   id: string;
@@ -105,14 +112,56 @@ export default function HeroInteractive({
   points?: HeroPoint[];
 }) {
   const wrapRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLImageElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
   const [active, setActive] = useState<HeroPoint | null>(null);
   const [edit, setEdit] = useState(false);
   const [pick, setPick] = useState<string | null>(null);
+  const [geom, setGeom] = useState<Geom | null>(null);
 
-  // Mouse parallax on the whole image+markers layer.
+  // Compute the rectangle the image actually occupies under object-cover, so
+  // markers can be mapped from image-space percentages to on-screen positions
+  // — correct at every aspect ratio (wide desktop, tall mobile, …).
+  const recompute = useCallback(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const W = wrap.offsetWidth;
+    const H = wrap.offsetHeight;
+    if (!W || !H) return;
+    const img = imgRef.current;
+    const aspect =
+      img && img.naturalWidth
+        ? img.naturalWidth / img.naturalHeight
+        : IMG_ASPECT_FALLBACK;
+    let rw: number;
+    let rh: number;
+    if (W / H < aspect) {
+      rh = H;
+      rw = H * aspect;
+    } else {
+      rw = W;
+      rh = W / aspect;
+    }
+    setGeom({ ox: (W - rw) / 2, oy: (H - rh) / 2, rw, rh });
+  }, []);
+
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    recompute();
+    window.addEventListener("resize", recompute);
+    return () => window.removeEventListener("resize", recompute);
+  }, [recompute]);
+
+  // Mouse parallax on the whole image+markers layer. Skipped on touch/reduced
+  // motion — and there the 1.16 overscan (which only exists to give the mouse
+  // parallax room) is dropped so the image crops less and more markers stay
+  // on-screen, especially on mobile.
+  useEffect(() => {
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const fine = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+    if (reduce || !fine) {
+      if (wrapRef.current) wrapRef.current.style.transform = "scale(1)";
+      return;
+    }
     const MAX = 26;
     const target = { x: 0, y: 0 };
     const cur = { x: 0, y: 0 };
@@ -160,10 +209,13 @@ export default function HeroInteractive({
   }, [active]);
 
   const onImageClick = (e: React.MouseEvent) => {
-    if (!edit || !wrapRef.current) return;
-    const r = wrapRef.current.getBoundingClientRect();
-    const x = ((e.clientX - r.left) / r.width) * 100;
-    const y = ((e.clientY - r.top) / r.height) * 100;
+    const wrap = wrapRef.current;
+    if (!edit || !wrap || !geom) return;
+    const r = wrap.getBoundingClientRect();
+    const px = ((e.clientX - r.left) / r.width) * wrap.offsetWidth;
+    const py = ((e.clientY - r.top) / r.height) * wrap.offsetHeight;
+    const x = ((px - geom.ox) / geom.rw) * 100;
+    const y = ((py - geom.oy) / geom.rh) * 100;
     const coords = `x: ${x.toFixed(1)}, y: ${y.toFixed(1)}`;
     setPick(coords);
     // eslint-disable-next-line no-console
@@ -181,8 +233,10 @@ export default function HeroInteractive({
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
+            ref={imgRef}
             src={src}
             alt={alt}
+            onLoad={recompute}
             className="w-full h-full object-cover select-none"
             draggable={false}
           />
@@ -197,8 +251,15 @@ export default function HeroInteractive({
                 if (!edit) setActive(p);
               }}
               aria-label={p.title}
-              style={{ left: `${p.x}%`, top: `${p.y}%` }}
-              className="group absolute z-[3] -translate-x-1/2 -translate-y-1/2 p-2.5 -m-2.5"
+              style={
+                geom
+                  ? {
+                      left: geom.ox + (p.x / 100) * geom.rw,
+                      top: geom.oy + (p.y / 100) * geom.rh,
+                    }
+                  : { left: `${p.x}%`, top: `${p.y}%` }
+              }
+              className="group absolute z-[3] -translate-x-1/2 -translate-y-1/2 p-2.5"
             >
               <span className="relative flex items-center justify-center">
                 <span className="absolute w-3.5 h-3.5 rounded-full bg-goldLight/70 animate-[hotspotPulse_2.4s_ease-out_infinite]" />
